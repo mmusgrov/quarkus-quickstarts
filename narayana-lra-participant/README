@@ -1,0 +1,12 @@
+
+cd /home/mmusgrov/src/forks/quarkus/quarkus/extensions
+mvn clean install -f narayana-lra-coordinator/pom.xml
+mvn clean install -f narayana-lra-participant/pom.xml
+
+cd narayana-lra-coordinator
+java $JAVA_OPTS -jar ../narayana-lra-coordinator/target/lra-coordinator-1.0-SNAPSHOT-runner.jar &
+
+cd narayana-lra-participant
+java $POPTS -Dquarkus.http.port=8081 -jar target/narayana-lra-participant-quickstart-1.0-SNAPSHOT-runner.jar &
+
+curl -XPOST http://localhost:8081/fruits/tx
