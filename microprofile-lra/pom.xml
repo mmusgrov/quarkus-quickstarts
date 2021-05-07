@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project>
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.acme</groupId>
+    <artifactId>narayana-lra-parent</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <name>LRA quickstart parent</name>
+    <description>Narayana LRA Parent pom</description>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>coordinator</module>
+        <module>participant</module>
+    </modules>
+</project>
