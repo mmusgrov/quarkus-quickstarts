@@ -16,17 +16,23 @@
     <artifactId>participant</artifactId>
 
     <properties>
+        <quarkus-plugin.version>999-SNAPSHOT</quarkus-plugin.version>
+	<!--
         <quarkus-plugin.version>1.12.2.Final</quarkus-plugin.version>
+	-->
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
         <quarkus.platform.version>999-SNAPSHOT</quarkus.platform.version>
+	<!--
+        <quarkus.platform.version>1.12.2.Final</quarkus.platform.version>
+	-->
         <compiler-plugin.version>3.8.1</compiler-plugin.version>
         <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
         <maven.compiler.parameters>true</maven.compiler.parameters>
-        <narayana.version>5.11.0.Final</narayana.version>
+        <narayana.version>5.11.2.Final</narayana.version>
     </properties>
 
     <dependencyManagement>
@@ -44,7 +50,15 @@
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
-            <artifactId>quarkus-narayana-lra-participant</artifactId>
+            <artifactId>quarkus-narayana-lra</artifactId>
+			<!--
+            <exclusions>
+                <exclusion>
+                    <groupId>org.jboss.narayana.rts</groupId>
+                    <artifactId>lra-coordinator-jar</artifactId>
+                </exclusion>
+            </exclusions>
+			-->
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -60,6 +74,14 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
+		<!--
+        <dependency>
+            <groupId>org.jboss.narayana.rts</groupId>
+            <artifactId>lra-test-arquillian-extension</artifactId>
+            <version>5.11.3.Final-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+		-->
     </dependencies>
 
     <build>
@@ -96,7 +118,10 @@
     <profiles>
         <profile>
             <id>embedded</id>
-        <!-- include an embedded LRA coordinator -->
+            <activation>
+                <activeByDefault>false</activeByDefault>
+            </activation>
+            <!-- include an embedded LRA coordinator -->
             <dependencies>
                 <dependency>
                     <groupId>org.jboss.narayana.rts</groupId>

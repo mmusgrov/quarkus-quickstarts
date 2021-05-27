@@ -8,17 +8,15 @@ import java.net.URI;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.HeaderParam;
-import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Application;
 import javax.ws.rs.core.Response;
 
 import static org.eclipse.microprofile.lra.annotation.ws.rs.LRA.LRA_HTTP_CONTEXT_HEADER;
 
-@Path("txns")
-public class TxnResource {
+@Path("/txns")
+//@ApplicationPath("/txns")
+public class TxnResource extends Application {
     private static final Logger LOGGER = Logger.getLogger(TxnResource.class.getName());
     static AtomicInteger completions = new AtomicInteger(0);
     static AtomicInteger compensations = new AtomicInteger(0);
@@ -32,7 +30,7 @@ public class TxnResource {
     }
 
     @POST
-    @Path("close")
+    @Path("tx")
     @LRA
     public String doInTx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
         return lraId.toASCIIString();
@@ -41,8 +39,8 @@ public class TxnResource {
     @POST
     @Path("cancel")
     @LRA
-    public String cancelInTx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
-        return Response.status(Status.BAD_REQUEST).entity(lraId).build();
+    public Response cancelInTx(@HeaderParam(LRA_HTTP_CONTEXT_HEADER) URI lraId) {
+        return Response.status(Response.Status.BAD_REQUEST).entity(lraId).build();
     }
 
     @PUT

@@ -1,4 +1,12 @@
- java $JAVA_OPTS -Dlra.http.port=8081 -Dlra.coordinator.url="http://localhost:8081/lra-coordinator" -jar participant/target/quarkus-app/quarkus-run.jar&
  java -Dquarkus.http.port=8081 -jar coordinator/target/quarkus-app/quarkus-run.jar &
+ java $JAVA_OPTS -Dlra.http.port=8081 -Dlra.coordinator.url="http://localhost:8081/lra-coordinator" -jar participant/target/quarkus-app/quarkus-run.jar&
+
  curl -XPOST http://localhost:8080/txns/tx
- curl -X POST http://localhost:8080/lra-coordinator/start
+ curl -X POST http://localhost:8081/lra-coordinator/start
+ curl -X GET http://localhost:8081/lra-coordinator
+
+
+
+java -Dquarkus.http.port=8081 -jar coordinator/target/quarkus-app/quarkus-run.jar &
+java $JAVA_OPTS -Dlra.http.port=8081 -Dlra.coordinator.url="http://localhost:8081/lra-coordinator" -jar participant/target/quarkus-app/quarkus-run.jar&
+curl -XPOST http://127.0.0.1:8080/txns/tx
